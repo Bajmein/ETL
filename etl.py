@@ -55,7 +55,7 @@ class EtlMt5:
         df.to_excel(nombre_archivo)
 
     @staticmethod
-    def a_minutos(tiempo_: str) -> int:
+    def __a_minutos(tiempo_: str) -> int:
         dias, horas, minutos = int(tiempo_[0:2]), int(tiempo_[-8:-6]), int(tiempo_[-5:-3])
         resultado: int = (dias * 24 + horas) * 60 + minutos
         return resultado
@@ -69,7 +69,7 @@ class EtlMt5:
             'tiempo': []
         }
         for tiempo in data:
-            tiempo = self.a_minutos(str(tiempo))
+            tiempo = self.__a_minutos(str(tiempo))
             diccionario_final['tiempo'].append(tiempo)
         dataframe_final = self.__conv_dataframe(diccionario_final)
         self.__exportar(dataframe_final)
