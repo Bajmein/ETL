@@ -50,25 +50,17 @@ class EtlMt5:
         return df
 
     @staticmethod
-    def __exportar(df: pd.DataFrame):
+    def __exportar(df: pd.DataFrame) -> None:
         nombre_archivo: str = 'datos.xlsx'
         df.to_excel(nombre_archivo)
 
-    def main(self):
-        self.__conector()
-        datos_crudos: tuple = self.__obtener_datos()
-        datos_limpios = self.__limpiar_datos(datos_crudos)
-        dataframe_limpio = self.__conv_dataframe(datos_limpios)
-        self.__exportar(dataframe_limpio)
-        self.__desconector()
-
     @staticmethod
-    def a_minutos(tiempo_: str):
+    def a_minutos(tiempo_: str) -> int:
         dias, horas, minutos = int(tiempo_[0:2]), int(tiempo_[-8:-6]), int(tiempo_[-5:-3])
         resultado: int = (dias * 24 + horas) * 60 + minutos
         return resultado
 
-    def main(self):
+    def main(self) -> None:
         self.__conector()
         data = self.__conv_dataframe(self.__limpiar_datos(self.__obtener_datos()))
         data = data.groupby(['position_id'])['time'].diff().dropna()
